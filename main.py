@@ -11,6 +11,7 @@ import time
 import traceback
 from sys import argv
 
+# from module (file) import <class|function|*>
 from RadicalGame import Game
 
 

@@ -7,9 +7,6 @@
 '''
 import pygame
 
-s_orignalCardSize = (363, 513)
-s_defaultCardSize = (int(363 / 2), int(513 / 2))
-
 
 def loadImage(fileName):
     try:
@@ -80,13 +77,9 @@ class Drawable(pygame.sprite.Sprite):  # Should we just use Surface?
     # Image rect is stretched to orthogonally fit the new surface
     # In other words, this only works perfectly for rectangular images!
     def recalcDimensions(self):
-        # print(self.image)
-        # print("Attributes of " + self.imageFile + " before rotate: " + str(self.rect) + ", " + str(self.rotation))
         self.image = pygame.transform.scale(self.originalImage, self.rect.size)
         self.image = pygame.transform.rotate(self.image, self.rotation)
         self.rect = self.image.get_bounding_rect()
-
-        # print("Attributes of " + self.imageFile + " after rotate: " + str(self.rect) + ", " + str(self.rotation))
 
     def highlight(self, highlight_onOff):
         if self.highlit == highlight_onOff:
@@ -97,6 +90,10 @@ class Drawable(pygame.sprite.Sprite):  # Should we just use Surface?
         else:
             self.resetScale()
         self.highlit = highlight_onOff
+
+
+s_orignalCardSize = (363, 513)
+s_defaultCardSize = (int(363 / 2), int(513 / 2))
 
 
 class Card(Drawable):
