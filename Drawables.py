@@ -5,18 +5,30 @@
  * Comments: Obviously, this is snatched from my vtes-client, and needs to be tidied.
  * Author: H. Skjevling
 '''
+
 import pygame
 
 
 def loadImage(fileName):
+    '''
+    This is an example docstring.
+    This function loads an image of an arbitrary format and returns a pygame-surface containing that image and it's rect.
+    '''
     try:
         image = pygame.image.load(fileName)
         if image.get_alpha() is None:
             image = image.convert()
         else:
             image = image.convert_alpha()
-    except pygame.error:
+
+    # Here we see an example of catching an explicit exception type
+    except pygame.error as ex:
+
+        # print(str(ex))  # If we'd like to print its conents
         print("Could not load image: " + fileName)
+
+        # The 'raise' keyword is used to 'throw' an exception to any above except(catch)-block
+        # If used within an except-block with no argument, the already caught exception is re-thrown to the next try-scope.
         raise
 
     return image, image.get_bounding_rect()
@@ -27,6 +39,7 @@ class Drawable(pygame.sprite.Sprite):  # Should we just use Surface?
     def __init__(self, imageFile):
         pygame.sprite.Sprite.__init__(self)
         self.imageFile = imageFile
+
         # print("Loading: " + self.imageFile)
         self.image, self.rect = loadImage(self.imageFile)
         self.originalImage = self.image.copy()
@@ -97,8 +110,12 @@ s_defaultCardSize = (int(363 / 2), int(513 / 2))
 
 
 class Card(Drawable):
+    '''
+     This is polymorphic inheriatince: the Card class is a 'child' of the Drawable class - Card is also a Drawable
+    '''
 
     def __init__(self, file_name):
+        # Within the Card-constructor, we call the parent-class Drawable's constructor to initialize those parts of this object
         Drawable.__init__(self, file_name)
         self.is_tapped = False
         self.resetScale()
@@ -141,7 +158,7 @@ class MousePointer(Drawable):
 
     def grab(self, item):
         if type(item) == Card:
-            self.grabbed = item
+            self.grabbed = item  # Should be redesigned to item.clicked(), or just pass the whole event
             if self.grabbed == self.highlit:
                 self.highlight(None)
             # print("Mousepointer grabbed: " + str(self.imageFile))

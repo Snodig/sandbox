@@ -34,6 +34,7 @@ def main():
 
     # Here we catch all exception not explicitly handled by other except-clauses.
     # For any except-clause, we could also access an exception-object (the one that was thrown), but I didn't feel like it.
+    # Operations on explicit exception-objects are not necessary in python 3, but have some uses.
     except:
         print("\n")
         traceback.print_exc()
